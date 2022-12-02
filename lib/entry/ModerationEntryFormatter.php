@@ -174,7 +174,7 @@ class ModerationEntryFormatter extends ModerationEntry {
 		$title = $this->getTitle();
 
 		$class = 'modline';
-		$line = '';
+		$line = '<tr><td>';
 
 		// Show/Preview links. Not needed for moves, because they don't change the text.
 		if ( !$this->isMove() ) {
@@ -245,6 +245,8 @@ class ModerationEntryFormatter extends ModerationEntry {
 			$line .= Xml::tags( 'sup', [ 'class' => 'whois plainlinks' ], "[$link]" );
 		}
 
+		$line .= '</td><td>';
+
 		$line .= ' ' . Linker::commentBlock( $row->comment, $title );
 
 		if ( !$row->merged_revid ) {
@@ -313,6 +315,8 @@ class ModerationEntryFormatter extends ModerationEntry {
 				$line .= ' . . ' . $this->msg( 'moderation-rejected-batch' )->plain();
 			}
 		}
+
+		$line .= '</td></tr>';
 
 		$html = Xml::tags( 'span', [ 'class' => $class ], $line );
 

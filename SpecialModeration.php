@@ -247,4 +247,29 @@ class SpecialModeration extends QueryPage {
 	protected function formatResult( $skin, $row ) {
 		return $this->entryFactory->makeFormatter( $row, $this->getContext() )->getHTML();
 	}
+
+	public function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
+
+		$out->addHTML( '<table>' );
+
+		if ( $num > 0 ) {
+			$html = [];
+
+			// @codingStandardsIgnoreStart Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed
+			for ( $i = 0; $i < $num && $row = $res->fetchObject(); $i++ ) {
+				// @codingStandardsIgnoreEnd
+				$line = $this->formatResult( $skin, $row );
+				if ( $line ) {
+					$html[] = $line;
+				}
+			}
+
+			$html = implode( '', $html );
+
+			$out->addHTML( $html );
+		}	
+
+		$out->addHTML( '</table>' );
+	}
+
 }
